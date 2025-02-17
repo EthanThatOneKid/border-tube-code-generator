@@ -1,4 +1,3 @@
-
 import BorderGenerator from "@/components/BorderGenerator";
 
 const Index = () => {
