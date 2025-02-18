@@ -26,11 +26,12 @@ const BORDER_COLORS = [
 const BorderGenerator = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [tubeID, setTubeID] = useState(searchParams.get("tube") || "green");
+  const [glow, setGlow] = useState(searchParams.get("glow") || "false");
   const [content, setContent] = useState(
     searchParams.get("content") || "Hello, World!",
   );
   const [bgColor, setBgColor] = useState(
-    searchParams.get("bgColor") || "white",
+    searchParams.get("bgColor") || "transparent",
   );
   const [paddingStyle, setPaddingStyle] = useState(
     searchParams.get("paddingStyle") || "2rem",
@@ -39,6 +40,7 @@ const BorderGenerator = () => {
   useEffect(() => {
     const params = new URLSearchParams();
     params.set("tube", tubeID);
+    params.set("glow", glow);
     params.set("content", content);
     params.set("bgColor", bgColor);
     params.set("paddingStyle", paddingStyle);
@@ -50,7 +52,7 @@ const BorderGenerator = () => {
   };
 
   const generateBodyCode = () => {
-    return `<div class="border-tube-${tubeID}" style="background-color: ${bgColor};${
+    return `<div class="border-tube-${tubeID}${glow === "true" ? " glow" : ""}" style="background-color: ${bgColor};${
       paddingStyle === "0" ? "" : ` padding: ${paddingStyle};`
     }">
 ${content}
@@ -99,6 +101,19 @@ ${content}
             </div>
 
             <div className="grid gap-2">
+              <Label htmlFor="glow">Glow</Label>
+              <Select value={glow} onValueChange={setGlow}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select glow" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="true">True</SelectItem>
+                  <SelectItem value="false">False</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="grid gap-2">
               <Label htmlFor="content">Content</Label>
               <Input
                 id="content"
@@ -134,7 +149,7 @@ ${content}
         <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold">
-              Generated <code>{"<head>"}</code> code
+              <code>{"<head>"}</code> code
             </h2>
             <Button
               variant="outline"
@@ -151,7 +166,7 @@ ${content}
         <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold">
-              Generated <code>{"<body>"}</code> code
+              <code>{"<body>"}</code> code
             </h2>
             <Button
               variant="outline"
