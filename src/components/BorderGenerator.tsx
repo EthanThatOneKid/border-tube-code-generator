@@ -175,6 +175,15 @@ ${content}
         >
           🧪 FartLabs
         </a>
+        <span className="mx-2">·</span>
+        <a
+          href="https://github.com/EthanThatOneKid/border-tube-code-generator"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-gray-900 transition-colors"
+        >
+          Source code↗
+        </a>
       </footer>
     </div>
   );
